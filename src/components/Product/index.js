@@ -9,7 +9,7 @@ class Product extends Component {
         <tbody>
           <tr>
             <td>
-              <Link to='/entity'>produto 1</Link>
+              <Link to='/product/edit'>produto 1</Link>
             </td>
           </tr>
         </tbody>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Entity extends Component {
 
@@ -8,7 +9,7 @@ class Entity extends Component {
         <tbody>
           <tr>
             <td>
-              entidade
+              Entidade 1
             </td>
           </tr>
         </tbody>
