@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import ProductForm from './form';
 
-class ProductEdit extends Component {
+class ProductNew extends Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
       <div>
-        <h1>Editar Produto</h1>
+        <h1>Criar Produto</h1>
         <ProductForm />
       </div>
     );
   }
 }
 
-export default ProductEdit;
+export default ProductNew;
