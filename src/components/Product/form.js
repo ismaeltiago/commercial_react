@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ProductList from './list';
+import axios from 'axios';
 
 class ProductForm extends Component {
   constructor(props) {
@@ -16,6 +16,33 @@ class ProductForm extends Component {
   }
 
   handleSubmit(event) {
+    // alert('A name was submitted: ' + this.state.value);
+
+    // if (!event.target.checkValidity()) {
+    //   // form is invalid! so we do nothing
+    //   return;
+    // }
+
+    // const data = new FormData(event.target);
+    
+    // fetch('http://localhost:3001/products', {
+    //   method: 'POST',
+    //   body: data,
+    // });
+
+    // const data = {
+    var data = {
+      product: {
+        description: 'vai react'
+      }
+    };
+
+    axios.post('http://localhost:3001/products', data).then((result) => {
+      console.log(result);
+    });
+
+debugger
+
     event.preventDefault();
   }
 

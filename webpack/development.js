@@ -1,46 +1,35 @@
 const webpack = require('webpack');
-const HtmlPlugin = require('html-webpack-plugin');
 const merge = require('lodash/merge');
+const common = require('./common');
 
-const {
-  shared,
-  loaders,
-  rules
-} = require('./common');
+const HtmlPlugin = require('html-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
-module.exports = merge(shared, {
+module.exports = merge({
   devtool: 'source-map',
+
   entry: [
     'react-hot-loader/patch',
-    'webpack-hot-middleware/client',
-    ...shared.entry,
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    ...common.entry
   ],
-  output: {
-    publicPath: '/',
-  },
-  module: {
-    rules: [
-      ...shared.module.rules,
-      merge(rules.style, {
-        use: [
-          rules.style.use.fallback,
-          ...rules.style.use.use,
-        ],
-      }),
-    ],
-  },
+
+  output: Object.assign({}, common.output, {
+    publicPath: ''
+  }),
+
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new HtmlPlugin(loaders.html),
+    new DashboardPlugin(),
+
+    new HtmlPlugin(common.htmlPluginConfig('template-dev.html'))
   ],
-  devServer: {
-    host: 'localhost',
-    port: 3000,
-    historyApiFallback: true,
-    hot: true,
-    open: true,
-    inline: true,
+
+  module: {
+    // rules: [common.standardPreLoader, common.jsLoader, common.cssLoader]
+    rules: [common.jsLoader, common.cssLoader]
   },
+
+  resolve: common.resolve
 });

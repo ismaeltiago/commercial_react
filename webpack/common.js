@@ -1,45 +1,49 @@
-const paths = {
-  root: `${__dirname}/..`,
-  src: `${__dirname}/../src`,
-  dist: `${__dirname}/../dist`,
-};
+const path = require('path');
 
 module.exports = {
-  paths,
-  loaders: {
-    html: {
-      template: `${paths.src}/index.html`,
-      filename: 'index.html',
-      inject: 'body',
-    },
+  entry: [ path.join(__dirname, '..', 'src', 'index') ],
+
+  output: {
+    path: path.join(__dirname, '..', 'dist'),
+    filename: '[name]-[hash].js'
   },
-  rules: {
-    style: {
-      test: /\.(css|less)$/,
-      use: {
-        fallback: 'style-loader',
-        use: ['css-loader', 'less-loader'],
-      },
-    },
+
+  htmlPluginConfig: (template) => ({
+    title: 'React app',
+    template: path.join(__dirname, '..', 'src', 'html', template)
+  }),
+
+// packages
+// "standard": "^11.0.0",
+// "standard-loader": "^6.0.1",
+
+  // standardPreLoader: {
+  //   enforce: 'pre',
+  //   test: /\.js$/,
+  //   exclude: /node_modules/,
+  //   include: /src/,
+  //   loader: 'standard-loader'
+  // },
+
+  jsLoader: {
+    test: /\.js$/,
+    exclude: /node_modules/,
+    include: /src/,
+    loader: 'babel-loader'
   },
-  shared: {
-    entry: [
-      'babel-polyfill',
-      'normalize-css',
-      `${paths.src}/index`,
-    ],
-    output: {
-      path: paths.dist,
-      filename: 'main.js',
-    },
-    module: {
-      rules: [
-        {
-          test: /.js$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/,
-        },
-      ],
-    },
+
+  cssLoader: {
+    test: /\.css$/,
+    exclude: /node_modules/,
+    include: /src/,
+    loaders: ['style', 'css']
   },
+
+  resolve: {
+    alias: {
+      src: path.join(__dirname, '..', 'src'),
+      components: path.join(__dirname, '..', 'src', 'components'),
+      utils: path.join(__dirname, '..', 'src', 'utils')
+    }
+  }
 };
