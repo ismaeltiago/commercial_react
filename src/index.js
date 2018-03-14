@@ -10,7 +10,7 @@ const renderApp = (NextApp) => {
     <AppContainer>
       <NextApp />
     </AppContainer>,
-    document.querySelector('[data-js="app"]')
+    document.getElementById('app')
   )
 };
 
@@ -20,5 +20,5 @@ if (module.hot) {
   module.hot.accept('./App', () => {
     const NextApp = require('./App').default;
     renderApp(NextApp);
-  })
+  });
 }
